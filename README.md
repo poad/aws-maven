@@ -27,15 +27,16 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
   ...
   <build>
     ...
-    <extensions>
+    <plugins>
       ...
-      <extension>
+      <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.0</version>
-      </extension>
+        <version>6.0.1</version>
+        <extensions>true</extensions>
+      </plugin>
       ...
-    </extensions>
+    </plugins>
     ...
   </build>
   ...

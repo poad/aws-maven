@@ -13,7 +13,7 @@
 
     <properties>
         <amazonaws.version>1.11.585</amazonaws.version>
-        <wagon.version>3.0.0</wagon.version>
+        <wagon.version>3.3.3</wagon.version>
 
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
