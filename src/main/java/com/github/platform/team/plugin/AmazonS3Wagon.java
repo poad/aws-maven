@@ -143,7 +143,7 @@ public final class AmazonS3Wagon extends AbstractWagon {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(0);
 
-        return new PutObjectRequest(bucketName, key, inputStream, objectMetadata).withCannedAcl(CannedAccessControlList.PublicRead);
+        return new PutObjectRequest(bucketName, key, inputStream, objectMetadata);
     }
 
     private static String getBucketRegion(AWSCredentialsProvider credentialsProvider, ClientConfiguration clientConfiguration, String bucketName) {
