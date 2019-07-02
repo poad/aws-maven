@@ -1,12 +1,12 @@
 # AWS Maven Wagon
 ##NOTE: THIS PROJECT IS NOT SUPPORTED ANYMORE!!!
 
-[![GitHub version](https://badge.fury.io/gh/platform-team%2Faws-maven.svg)](http://badge.fury.io/gh/platform-team%2Faws-maven)
+[![GitHub version](https://badge.fury.io/gh/poad%2Faws-maven.svg)](http://badge.fury.io/gh/poad%2Faws-maven)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [![Dependency Status](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be)
-[![Build Status](https://travis-ci.org/platform-team/aws-maven.svg?branch=master)](https://travis-ci.org/platform-team/aws-maven)
-[![Coverage Status](https://coveralls.io/repos/github/platform-team/aws-maven/badge.svg?branch=master)](https://coveralls.io/github/platform-team/aws-maven?branch=master)
+[![Build Status](https://travis-ci.org/poad/aws-maven.svg?branch=master)](https://travis-ci.org/poad/aws-maven)
+[![Coverage Status](https://coveralls.io/repos/github/poad/aws-maven/badge.svg?branch=master)](https://coveralls.io/github/poad/aws-maven?branch=master)
 
 
 ## Description
@@ -20,22 +20,23 @@ This project is a fork of a [Maven Wagon](https://github.com/spring-projects/aws
 
 
 ## Usage
-To publish Maven artifacts to S3 a build extension must be defined in a project's `pom.xml`.  The latest version of the wagon can be found on the [`aws-maven`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.platform-team%22%20AND%20a%3A%22aws-maven%22) page in Maven Central.
+To publish Maven artifacts to S3 a build extension must be defined in a project's `pom.xml`.  The latest version of the wagon can be found on the [`aws-maven`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.poad%22%20AND%20a%3A%22aws-maven%22) page in Maven Central.
 
 ```xml
 <project>
   ...
   <build>
     ...
-    <extensions>
+    <plugins>
       ...
-      <extension>
-        <groupId>com.github.platform-team</groupId>
+      <plugin>
+        <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.0</version>
-      </extension>
+        <version>6.0.1</version>
+        <extensions>true</extensions>
+      </plugin>
       ...
-    </extensions>
+    </plugins>
     ...
   </build>
   ...
