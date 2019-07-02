@@ -1,8 +1,11 @@
-language: java8
+language: java
+
+jdk:
+  - openjdk8
 
 branches:
   only:
     - master
 
 after_success:
-- mvn clean test jacoco:report coveralls:report
+- ./mvnw clean test jacoco:report coveralls:report
