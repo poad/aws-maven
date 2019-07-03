@@ -217,7 +217,7 @@
 
     <url>https://github.com/poad/aws-maven</url>
 
-    <inceptionYear>2018</inceptionYear>
+    <inceptionYear>2019</inceptionYear>
 
     <licenses>
         <license>
@@ -232,11 +232,6 @@
         <url>https://github.com/poad/aws-maven</url>
     </scm>
 
-    <organization>
-        <name>Platform Team</name>
-        <url>https://platform.team</url>
-    </organization>
-
     <ciManagement>
         <system>Travis CI</system>
         <url>https://travis-ci.org/poad/aws-maven</url>
@@ -249,9 +244,9 @@
 
     <developers>
         <developer>
-            <id>moleksyuk</id>
-            <name>Mykhailo Oleksiuk</name>
-            <email>mykhailo.oleksiuk@gmail.com</email>
+            <id>poad</id>
+            <name>Kenji Saitok</name>
+            <email>poad1010@gmail.com</email>
         </developer>
     </developers>
 
