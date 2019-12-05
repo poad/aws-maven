@@ -184,7 +184,6 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
 
     <url>https://github.com/poad/aws-maven</url>
@@ -238,7 +237,10 @@
         <profile>
             <id>ossrh</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                     <name>performRelease</name>
+                     <value>true</value>
+                 </property>
             </activation>
             <properties>
                 <gpg.executable>gpg</gpg.executable>
@@ -277,6 +279,9 @@
         </profile>
         <profile>
             <id>travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 </project>
