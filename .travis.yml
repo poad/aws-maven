@@ -8,4 +8,4 @@ jdk:
 #    - master
 
 after_success:
-- ./mvnw clean test jacoco:report coveralls:report
+- ./mvnw -P travis clean test jacoco:report coveralls:report
