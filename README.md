@@ -1,10 +1,7 @@
 # AWS Maven Wagon
-##NOTE: THIS PROJECT IS NOT SUPPORTED ANYMORE!!!
-
 [![GitHub version](https://badge.fury.io/gh/poad%2Faws-maven.svg)](https://badge.fury.io/gh/poad%2Faws-maven)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[![Dependency Status](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a8ab8e30fb24f3a2ef5b4be)
 [![Build Status](https://travis-ci.org/poad/aws-maven.svg?branch=master)](https://travis-ci.org/poad/aws-maven)
 [![Coverage Status](https://coveralls.io/repos/github/poad/aws-maven/badge.svg?branch=master)](https://coveralls.io/github/poad/aws-maven?branch=master)
 
