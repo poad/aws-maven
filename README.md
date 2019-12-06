@@ -32,7 +32,7 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
       <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.1</version>
+        <version>6.0.2</version>
         <extensions>true</extensions>
       </plugin>
       ...
@@ -213,6 +213,11 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 ```
 
 ## Release Notes
+* `6.0.2`
+    - Updated to the latest versions of aws-sdk.
+* `6.0.1`
+    - Updated to the latest versions of aws-sdk.
+    - Supports Put to a private repository in PutObject as if not setting ACL。
 * `6.0.0`
     - Updated to the latest versions of aws-sdk and maven-wagon.
     - Changed order of aws credential resolution strategy.
