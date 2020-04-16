@@ -102,6 +102,22 @@ public class S3UtilsTest {
         assertThat(actual.getProxyPort(), equalTo(expectedPort));
     }
 
+    @Test
+    @Parameters(method = "proxyProvidersWithAllParameter")
+    public void getClientConfigurationProxyInfoProviderWithAllParameter(ProxyInfoProvider provider, String expectedHost, int expectedPort, String expectedUsername, String expectedPassword, String expectedNonProxyHosts) {
+        // GIVEN
+
+        // WHEN
+        ClientConfiguration actual = S3Utils.getClientConfiguration(provider);
+
+        // THEN
+        assertThat(actual.getProxyHost(), equalTo(expectedHost));
+        assertThat(actual.getProxyPort(), equalTo(expectedPort));
+        assertThat(actual.getProxyUsername(), equalTo(expectedUsername));
+        assertThat(actual.getProxyPassword(), equalTo(expectedPassword));
+        assertThat(actual.getNonProxyHosts(), equalTo(expectedNonProxyHosts));
+    }
+
     public Object[][] buckets() {
         return new Object[][]{
                 {new Repository("id", ""), "localhost"},
@@ -131,6 +147,20 @@ public class S3UtilsTest {
                     proxyInfo.setPort(8888);
                     return proxyInfo;
                 }, "host", 8888},
+        };
+    }
+
+    public Object[][] proxyProvidersWithAllParameter() {
+        return new Object[][]{
+                {(ProxyInfoProvider) protocol -> {
+                    ProxyInfo proxyInfo = new ProxyInfo();
+                    proxyInfo.setHost("host");
+                    proxyInfo.setPort(8888);
+                    proxyInfo.setUserName("foo");
+                    proxyInfo.setPassword("bar");
+                    proxyInfo.setNonProxyHosts("local.net|some.host.com");
+                    return proxyInfo;
+                }, "host", 8888, "foo", "bar", "local.net|some.host.com"},
         };
     }
 }
