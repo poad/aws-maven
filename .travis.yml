@@ -1,8 +1,11 @@
 language: java
 
-branches:
-  only:
-    - master
+jdk:
+  - openjdk8
+
+#branches:
+#  only:
+#    - master
 
 after_success:
-- mvn clean test jacoco:report coveralls:report
+- ./mvnw -P travis clean test jacoco:report coveralls:report
