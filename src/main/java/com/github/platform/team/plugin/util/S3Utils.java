@@ -48,7 +48,10 @@ public abstract class S3Utils {
         if (proxyInfoProvider != null) {
             ProxyInfo proxyInfo = proxyInfoProvider.getProxyInfo("s3");
             if (proxyInfo != null) {
-                clientConfiguration.withProxyHost(proxyInfo.getHost()).withProxyPort(proxyInfo.getPort());
+                clientConfiguration.withProxyHost(proxyInfo.getHost()).withProxyPort(proxyInfo.getPort())
+                        .withProxyUsername(proxyInfo.getUserName())
+                        .withProxyPassword(proxyInfo.getPassword())
+                        .withNonProxyHosts(proxyInfo.getNonProxyHosts());
             }
         }
 
