@@ -1,22 +1,23 @@
 # AWS Maven Wagon
+
 [![GitHub version](https://badge.fury.io/gh/poad%2Faws-maven.svg)](https://badge.fury.io/gh/poad%2Faws-maven)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [![Build Status](https://travis-ci.org/poad/aws-maven.svg?branch=master)](https://travis-ci.org/poad/aws-maven)
-[![Coverage Status](https://coveralls.io/repos/github/poad/aws-maven/badge.svg?branch=master)](https://coveralls.io/github/poad/aws-maven?branch=master)
-
+branch=master)
 
 ## Description
+
 This project is a fork of a [Maven Wagon](https://github.com/spring-projects/aws-maven) for [Amazon S3](http://aws.amazon.com/s3/).  In order to to publish artifacts to an S3 bucket, the user (as identified by their access key) must be listed as an owner on the bucket.
 
-
 ## Why this fork?
+
 - original repo not maintained for a long time but we updated fork to the latest libs.
 - we fixed some of issues that blocks others and us.
-- no support from maintainers of original repo. 
-
+- no support from maintainers of original repo.
 
 ## Usage
+
 To publish Maven artifacts to S3 a build extension must be defined in a project's `pom.xml`.  The latest version of the wagon can be found on the [`aws-maven`](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.poad%22%20AND%20a%3A%22aws-maven%22) page in Maven Central.
 
 ```xml
@@ -29,7 +30,7 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
       <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.2</version>
+        <version>6.0.3</version>
         <extensions>true</extensions>
       </plugin>
       ...
@@ -91,6 +92,7 @@ Finally the `~/.m2/settings.xml` must be updated to include access and secret ke
 ```
 
 ### Connecting through a Proxy
+
 For being able to connect behind an HTTP proxy you need to add the following configuration to `~/.m2/settings.xml`:
 
 ```xml
@@ -115,12 +117,13 @@ For being able to connect behind an HTTP proxy you need to add the following con
 
 Alternatively, the access and secret keys for the account can be provided using (applied in order below)
 
-* `aws.accessKeyId` and `aws.secretKey` [system properties](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/SystemPropertiesCredentialsProvider.html)
-* `AWS_ACCESS_KEY_ID` (or `AWS_ACCESS_KEY`) and `AWS_SECRET_KEY` (or `AWS_SECRET_ACCESS_KEY`) [environment variables](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/EnvironmentVariableCredentialsProvider.html)
-* `aws_access_key_id` and `aws_secret_access_key` of [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
-* The Amazon EC2 [Instance Metadata Service](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/EC2ContainerCredentialsProviderWrapper.html)
+- `aws.accessKeyId` and `aws.secretKey` [system properties](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/SystemPropertiesCredentialsProvider.html)
+- `AWS_ACCESS_KEY_ID` (or `AWS_ACCESS_KEY`) and `AWS_SECRET_KEY` (or `AWS_SECRET_ACCESS_KEY`) [environment variables](http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/EnvironmentVariableCredentialsProvider.html)
+- `aws_access_key_id` and `aws_secret_access_key` of [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-config-files.html)
+- The Amazon EC2 [Instance Metadata Service](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/auth/EC2ContainerCredentialsProviderWrapper.html)
 
 ## Making Artifacts Public
+
 This wagon doesn't set an explict ACL for each artifact that is uploaded. Instead you should create an AWS Bucket Policy to set permissions on objects. A bucket policy can be set in the [AWS Console](https://console.aws.amazon.com/s3) and can be generated using the [AWS Policy Generator](http://awspolicygen.s3.amazonaws.com/policygen.html).
 
 In order to make the contents of a bucket public you need to add statements with the following details to your policy:
@@ -210,18 +213,23 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 ```
 
 ## Release Notes
-* `6.0.2`
-    - Updated to the latest versions of aws-sdk.
-* `6.0.1`
-    - Updated to the latest versions of aws-sdk.
-    - Supports Put to a private repository in PutObject as if not setting ACL。
-* `6.0.0`
-    - Updated to the latest versions of aws-sdk and maven-wagon.
-    - Changed order of aws credential resolution strategy.
-    - Added support of all regions defined in aws-sdk.
+
+- `6.0.3`
+  - Support proxy username, password, nonProxyHosts. (#8)
+  - Updated to the latest versions of aws-sdk.
+- `6.0.2`
+  - Updated to the latest versions of aws-sdk.
+- `6.0.1`
+  - Updated to the latest versions of aws-sdk.
+  - Supports Put to a private repository in PutObject as if not setting ACL。
+- `6.0.0`
+  - Updated to the latest versions of aws-sdk and maven-wagon.
+  - Changed order of aws credential resolution strategy.
+  - Added support of all regions defined in aws-sdk.
 
 ## License
 
+```license
 Copyright 2018-Present Platform Team.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -235,3 +243,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
