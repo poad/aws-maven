@@ -204,8 +204,8 @@
     </scm>
 
     <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/poad/aws-maven</url>
+        <system>Github</system>
+        <url>https://github.com/poad/aws-maven/</url>
     </ciManagement>
 
     <issueManagement>
@@ -278,7 +278,7 @@
             </build>
         </profile>
         <profile>
-            <id>travis</id>
+            <id>ci</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
