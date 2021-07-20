@@ -1,9 +1,9 @@
 # AWS Maven Wagon
 
-![Maven Central](https://img.shields.io/maven-central/v/com.github.poad/aws-maven)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.poad/aws-maven)](https://github.com/poad/aws-maven/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[![Build Status](https://travis-ci.org/poad/aws-maven.svg?branch=master)](https://travis-ci.org/poad/aws-maven)
+[![Continuous Integration](https://github.com/poad/aws-maven/actions/workflows/ci.yml/badge.svg)](https://search.maven.org/artifact/com.github.poad/aws-maven)
 
 
 ## Description
