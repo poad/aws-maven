@@ -1,10 +1,10 @@
 # AWS Maven Wagon
 
-[![GitHub version](https://badge.fury.io/gh/poad%2Faws-maven.svg)](https://badge.fury.io/gh/poad%2Faws-maven)
+![Maven Central](https://img.shields.io/maven-central/v/com.github.poad/aws-maven)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [![Build Status](https://travis-ci.org/poad/aws-maven.svg?branch=master)](https://travis-ci.org/poad/aws-maven)
-branch=master)
+
 
 ## Description
 
