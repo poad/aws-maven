@@ -38,4 +38,11 @@ jobs:
       with:
         java-version: ${{ matrix.jdk-version }}
     - name: Build and Test
-      run: ./mvnw -P ci clean test jacoco:report coveralls:report
+      run: ./mvnw -P ci clean test surefire-report:report jacoco:report
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: JUnit and JaCoCo
+        path: |
+          ./target/site/jacoco
+          ./target/surefire-reports
