@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -36,4 +37,5 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.jdk-version }}
-    - run: ./mvnw -P ci clean test jacoco:report coveralls:report
+    - name: Build and Test
+      run: ./mvnw -P ci clean test jacoco:report coveralls:report
