@@ -38,7 +38,7 @@ jobs:
     - name: Build and Test
       run: ./mvnw -P ci clean test surefire-report:report jacoco:report
     
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
