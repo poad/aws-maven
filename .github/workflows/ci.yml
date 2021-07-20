@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+
+
+jobs:
+
+  configure:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Pull request auto merge enabler
+      if: github.event_name == 'pull_request'
+      uses: poad/github-pull-request-auto-merge-enable-action@v1.0.0
+      with:
+        pull_request_id: ${{ github.event.pull_request.node_id }}
+        github_token: ${{ secrets.PERSONAL_TOKEN_FOR_GITHUB_ACTIONS }}
+        repository: ${{ github.event.repository.name }}
+        owner: ${{ github.repository_owner }}
+        merge_method: SQUASH
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk-version: [1.8, 11, 16]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.jdk-version }}
+    - name: Build and Test
+      run: ./mvnw -P ci clean test surefire-report:report jacoco:report
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: JUnit and JaCoCo
+        path: |
+          ./target/site/jacoco
+          ./target/surefire-reports
