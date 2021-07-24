@@ -29,20 +29,27 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk-version: [1.8, 11, 16]
+        jdk-version: [8, 11, 16]
 
     steps:
     - uses: actions/checkout@v2
+#    - name: Set up JDK
+#      uses: actions/setup-java@v2
+#      with:
+#        java-version: ${{ matrix.jdk-version }}
+#        distribution: zulu
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.jdk-version }}
+
     - name: Build and Test
-      run: ./mvnw -P ci clean test surefire-report:report jacoco:report
+      run: ./gradlew clean test
     
     - uses: actions/upload-artifact@v2
+      if: always()
       with:
         name: JUnit and JaCoCo
         path: |
-          ./target/site/jacoco
-          ./target/surefire-reports
+          ./build/reports/jacoco/test
+          ./build/reports/tests/test

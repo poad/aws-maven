@@ -18,7 +18,6 @@ package com.github.platform.team.plugin;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -40,17 +39,14 @@ import org.mockito.ArgumentCaptor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.github.platform.team.plugin.maven.matchers.Matchers.eq;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -175,8 +171,8 @@ public class AmazonS3WagonTest {
 
         when(this.amazonS3.listObjects(eq(listObjectsRequest))).thenReturn(this.objectListing);
         when(this.objectListing.isTruncated()).thenReturn(true, false);
-        when(this.objectListing.getCommonPrefixes()).thenReturn(Arrays.asList("foo/"));
-        when(this.objectListing.getObjectSummaries()).thenReturn(Arrays.asList(this.s3ObjectSummary));
+        when(this.objectListing.getCommonPrefixes()).thenReturn(Collections.singletonList("foo/"));
+        when(this.objectListing.getObjectSummaries()).thenReturn(Collections.singletonList(this.s3ObjectSummary));
         when(this.s3ObjectSummary.getKey()).thenReturn(BASE_DIRECTORY + FILE_NAME);
 
         List<String> directoryContents = this.wagon.listDirectory("");
@@ -193,8 +189,8 @@ public class AmazonS3WagonTest {
 
         when(this.amazonS3.listObjects(eq(listObjectsRequest))).thenReturn(this.objectListing);
         when(this.objectListing.isTruncated()).thenReturn(true, false);
-        when(this.objectListing.getCommonPrefixes()).thenReturn(Arrays.asList("foo/"));
-        when(this.objectListing.getObjectSummaries()).thenReturn(Arrays.asList(this.s3ObjectSummary));
+        when(this.objectListing.getCommonPrefixes()).thenReturn(Collections.singletonList("foo/"));
+        when(this.objectListing.getObjectSummaries()).thenReturn(Collections.singletonList(this.s3ObjectSummary));
         when(this.s3ObjectSummary.getKey()).thenReturn(BASE_DIRECTORY + "release/robots.txt");
 
         List<String> directoryContents = this.wagon.listDirectory("release/");
@@ -221,7 +217,9 @@ public class AmazonS3WagonTest {
                 .thenReturn(new S3ObjectInputStream(new FileInputStream("src/test/resources/test.txt"), null));
 
         File target = new File("target/robots.txt");
-        target.delete();
+        if (target.exists()) {
+            assertTrue(target.delete());
+        }
         assertFalse(target.exists());
 
         this.wagon.getResource(FILE_NAME, target, this.transferProgress);

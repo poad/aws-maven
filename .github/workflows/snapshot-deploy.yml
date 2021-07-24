@@ -1,12 +1,12 @@
 name: Continuous Delivery
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types:
+      - published
 
   workflow_dispatch:
+
 
 jobs:
     
@@ -34,4 +34,4 @@ jobs:
         MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-      run: ./gradlew -Ptarget=release clean publish
+      run: ./gradlew -Ptarget=snapshot clean publish
