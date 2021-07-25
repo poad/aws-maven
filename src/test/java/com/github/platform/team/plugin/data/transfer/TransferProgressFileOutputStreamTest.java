@@ -22,6 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +41,10 @@ public class TransferProgressFileOutputStreamTest {
 
     @Before
     public void before() throws Exception {
-        this.outputStream = new TransferProgressFileOutputStream(new File("target/test.txt"), this.transferProgress);
+        Path path = Files.createTempDirectory("test-");
+        Files.createDirectory( new File(path.toAbsolutePath().toFile(), "target").toPath());
+        File target = new File(path.toAbsolutePath().toFile(), "target/robots.txt");
+        this.outputStream = new TransferProgressFileOutputStream(target, this.transferProgress);
     }
 
     @After

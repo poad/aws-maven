@@ -38,7 +38,9 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 import static com.github.platform.team.plugin.maven.matchers.Matchers.eq;
@@ -210,13 +212,15 @@ public class AmazonS3WagonTest {
     }
 
     @Test
-    public void getResource() throws TransferFailedException, FileNotFoundException, ResourceDoesNotExistException {
+    public void getResource() throws TransferFailedException, IOException, ResourceDoesNotExistException {
         when(this.amazonS3.getObject(AmazonS3WagonTest.BUCKET_NAME,
                 BASE_DIRECTORY + FILE_NAME)).thenReturn(this.s3Object);
         when(this.s3Object.getObjectContent())
                 .thenReturn(new S3ObjectInputStream(new FileInputStream("src/test/resources/test.txt"), null));
 
-        File target = new File("target/robots.txt");
+        Path path = Files.createTempDirectory("test-");
+        Files.createDirectory( new File(path.toAbsolutePath().toFile(), "target").toPath());
+        File target = new File(path.toAbsolutePath().toFile(), "target/robots.txt");
         if (target.exists()) {
             assertTrue(target.delete());
         }
