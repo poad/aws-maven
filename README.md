@@ -5,7 +5,6 @@
 
 [![Continuous Integration](https://github.com/poad/aws-maven/actions/workflows/ci.yml/badge.svg)](https://github.com/poad/aws-maven/actions/workflows/ci.yml)
 
-
 ## Description
 
 This project is a fork of a [Maven Wagon](https://github.com/spring-projects/aws-maven) for [Amazon S3](http://aws.amazon.com/s3/).  In order to to publish artifacts to an S3 bucket, the user (as identified by their access key) must be listed as an owner on the bucket.
@@ -30,7 +29,7 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
       <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.3</version>
+        <version>6.0.4</version>
         <extensions>true</extensions>
       </plugin>
       ...
@@ -214,6 +213,9 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 
 ## Release Notes
 
+- `6.0.4`
+  - Migrate Maven to Gradle
+  - Migrate Logger to Log4j2
 - `6.0.3`
   - Support proxy username, password, nonProxyHosts. (#8)
   - Updated to the latest versions of aws-sdk.
