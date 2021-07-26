@@ -1,6 +1,11 @@
-['java', 'maven-publish', 'signing', 'jacoco'].each {
-    apply plugin : it
+plugins {
+    id "java-library"
+    id "maven-publish"
+    id 'signing'
+    id 'jacoco'
+    id "io.codearte.nexus-staging" version "0.30.0"
 }
+
 
 def profile = "snapshot"
 if (project.hasProperty('target')) {
@@ -32,7 +37,7 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.7.2"))
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom
-    testImplementation(platform("org.apache.logging.log4j:log4j-bom:2.14.1"))
+    implementation(platform("org.apache.logging.log4j:log4j-bom:2.14.1"))
 
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.27'
     implementation 'org.slf4j:jcl-over-slf4j:1.7.29'
@@ -64,24 +69,24 @@ dependencies {
     runtimeOnly 'org.apache.logging.log4j:log4j-slf4j-impl'
 }
 
+nexusStaging {
+    username = System.getenv("MAVEN_USERNAME")
+    password = System.getenv("MAVEN_PASSWORD")
+    packageGroup = 'com.github.poad'
+}
+
 publishing {
     publications {
         release(MavenPublication) {
             from components.java
 
-            project.tasks.withType(Sign) {
-                signatures.all {
-                    def type = it.type
-                    if (it.file.name.endsWith('.tar.gz.asc')) {  // Workaround in case a tar.gz file should published
-                        type = 'tar.gz.asc'
-                    } else if (it.type.equals('xml.asc')) {  // Set correct extension for signature of pom file
-                        type = 'pom.asc'
-                    }
-                    artifact source: it.file, classifier: it.classifier ?: null, extension: type
-                }
-            }
-
             pom {
+                signing {
+                    useGpgCmd()
+                    sign publishing.publications.release
+                    sign configurations.archives
+                }
+
                 name = "Amazon Web Services S3 Maven Wagon Support"
                 description = "Standard Maven wagon support for s3:// urls"
                 url = "https://github.com/poad/aws-maven"
@@ -130,6 +135,13 @@ publishing {
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
+    }
+}
+
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
 

@@ -21,6 +21,9 @@ jobs:
       run: |
         cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
         gpg --list-secret-keys --keyid-format LONG
+    - name: debug
+      run: ls -al /home/runner/.gnupg
+
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
@@ -34,5 +37,6 @@ jobs:
       env:
         MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        MAVEN_GPG_KEY_ID: ${{secrets.OSSRH_GPG_SECRET_KEY_ID }}
         MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-      run: ./gradlew -Ptarget=snapshot clean publish
+      run: ./gradlew -Ptarget=snapshot -Psigning.gnupg.executable=gpg2 -Psigning.gnupg.passphrase=${MAVEN_GPG_PASSPHRASE} -Psigning.gnupg.keyName="${MAVEN_GPG_KEY_ID}" clean publish
