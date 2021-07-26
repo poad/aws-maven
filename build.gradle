@@ -7,12 +7,16 @@ if (project.hasProperty('target')) {
     profile = "$target"
 }
 
+//println(profile)
+
 group = 'com.github.poad'
-version = '6.0.3' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
+version = '6.0.4' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
         .ofPattern("yyyyMMddHHmmss")
-        .format(ZonedDateTime.now()) : '')
+        .format(ZonedDateTime.now()) + '-SNAPSHOT' : '')
 description = 'Amazon Web Services S3 Maven Wagon Support'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+//println(version)
 
 java {
     withSourcesJar()
@@ -99,7 +103,6 @@ publishing {
                 }
                 scm {
                     connection = "scm:git:git@github.com:poad/aws-maven.git"
-                    developerConnection = "scm:svn:https://subversion.example.com/svn/project/trunk/"
                     url = "https://github.com/poad/aws-maven"
                 }
 
@@ -121,7 +124,7 @@ publishing {
     repositories {
         maven {
             name "OSSRH"
-            url profile == "release" ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://oss.sonatype.org/content/repositories/snapshots"
+            url profile != "snapshot" ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://oss.sonatype.org/content/repositories/snapshots/"
             credentials {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
@@ -148,9 +151,6 @@ test {
         junitXml.required = true
         html.required = true
     }
-
-    maxParallelForks = 1
-    forkEvery = 1
 
     finalizedBy(jacocoTestReport)
 }
