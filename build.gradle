@@ -1,0 +1,167 @@
+['java', 'maven-publish', 'signing', 'jacoco'].each {
+    apply plugin : it
+}
+
+def profile = "snapshot"
+if (project.hasProperty('target')) {
+    profile = "$target"
+}
+
+group = 'com.github.poad'
+version = '6.0.3' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
+        .ofPattern("yyyyMMddHHmmss")
+        .format(ZonedDateTime.now()) : '')
+description = 'Amazon Web Services S3 Maven Wagon Support'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.7.2"))
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom
+    testImplementation(platform("org.apache.logging.log4j:log4j-bom:2.14.1"))
+
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.27'
+    implementation 'org.slf4j:jcl-over-slf4j:1.7.29'
+    implementation 'org.slf4j:slf4j-api:1.7.29'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'com.sun.xml.bind:jaxb-core:2.3.0'
+    implementation 'com.sun.xml.bind:jaxb-impl:2.3.0'
+    implementation 'javax.activation:javax.activation-api:1.2.0'
+    implementation 'org.apache.maven.wagon:wagon-provider-api:3.4.3'
+
+    testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
+    testImplementation 'org.mockito:mockito-core:3.11.2'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+
+    testImplementation("org.junit.jupiter:junit-jupiter") {
+        because 'allows to write and run Jupiter tests'
+    }
+
+    testImplementation("junit:junit:4.13.2")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine") {
+        because 'allows JUnit 3 and JUnit 4 tests to run'
+    }
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+        because 'allows tests to run from IDEs that bundle older version of launcher'
+    }
+
+    runtimeOnly 'org.apache.logging.log4j:log4j-slf4j-impl'
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.java
+
+            project.tasks.withType(Sign) {
+                signatures.all {
+                    def type = it.type
+                    if (it.file.name.endsWith('.tar.gz.asc')) {  // Workaround in case a tar.gz file should published
+                        type = 'tar.gz.asc'
+                    } else if (it.type.equals('xml.asc')) {  // Set correct extension for signature of pom file
+                        type = 'pom.asc'
+                    }
+                    artifact source: it.file, classifier: it.classifier ?: null, extension: type
+                }
+            }
+
+            pom {
+                name = "Amazon Web Services S3 Maven Wagon Support"
+                description = "Standard Maven wagon support for s3:// urls"
+                url = "https://github.com/poad/aws-maven"
+
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        distribution = "repo"
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = "poad"
+                        name = "Kenji Saito"
+                        email = "poad1010@gmail.com"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git@github.com:poad/aws-maven.git"
+                    developerConnection = "scm:svn:https://subversion.example.com/svn/project/trunk/"
+                    url = "https://github.com/poad/aws-maven"
+                }
+
+                inceptionYear = "2019"
+
+                ciManagement {
+                    system = "Github"
+                    url = "https://github.com/poad/aws-maven/"
+                }
+
+                issueManagement {
+                    system = "Github"
+                    url = "https://github.com/poad/aws-maven/issues"
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name "OSSRH"
+            url profile == "release" ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://oss.sonatype.org/content/repositories/snapshots"
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+    }
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter', 'junit-vintage'
+        excludeEngines 'custom-engine'
+
+        // includeTags 'fast'
+        excludeTags 'slow'
+    }
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat "full"
+    }
+
+    reports {
+        junitXml.required = true
+        html.required = true
+    }
+
+    maxParallelForks = 1
+    forkEvery = 1
+
+    finalizedBy(jacocoTestReport)
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
