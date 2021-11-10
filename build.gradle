@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'com.sun.xml.bind:jaxb-core:3.0.2'
-    implementation 'com.sun.xml.bind:jaxb-impl:2.3.0'
+    implementation 'com.sun.xml.bind:jaxb-impl:3.0.2'
     implementation 'javax.activation:javax.activation-api:1.2.0'
     implementation 'org.apache.maven.wagon:wagon-provider-api:3.4.3'
 
