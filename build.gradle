@@ -1,9 +1,11 @@
+import java.time.Duration
+
 plugins {
     id "java-library"
     id "maven-publish"
     id 'signing'
     id 'jacoco'
-    id "io.codearte.nexus-staging" version "0.30.0"
+    id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
 }
 
 
@@ -12,16 +14,12 @@ if (project.hasProperty('target')) {
     profile = "$target"
 }
 
-//println(profile)
-
 group = 'com.github.poad'
 version = '6.0.5' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
         .ofPattern("yyyyMMddHHmmss")
         .format(ZonedDateTime.now()) + '-SNAPSHOT' : '')
 description = 'Amazon Web Services S3 Maven Wagon Support'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-//println(version)
 
 java {
     withSourcesJar()
@@ -78,10 +76,21 @@ dependencies {
     runtimeOnly 'org.apache.logging.log4j:log4j-slf4j-impl'
 }
 
-nexusStaging {
-    username = System.getenv("MAVEN_USERNAME")
-    password = System.getenv("MAVEN_PASSWORD")
+nexusPublishing {
     packageGroup = 'com.github.poad'
+    clientTimeout = Duration.ofSeconds(300)
+    connectTimeout = Duration.ofSeconds(60)
+
+    transitionCheckOptions {
+        maxRetries.set(100)
+        delayBetween.set(java.time.Duration.ofMillis(3000))
+    }
+    repositories {
+        sonatype {
+            username = System.getenv("MAVEN_USERNAME")
+            password = System.getenv("MAVEN_PASSWORD")
+        }
+    }
 }
 
 publishing {
