@@ -36,8 +36,8 @@ jobs:
 
     - name: Publish to the Maven Central Repository
       env:
-        MAVEN_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-        MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        MAVEN_GPG_KEY_ID: ${{secrets.OSSRH_GPG_SECRET_KEY_ID }}
-        MAVEN_GPG_PASSPHRASE: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-      run: ./gradlew -Ptarget=snapshot -Psigning.gnupg.executable=gpg2 -Psigning.gnupg.passphrase=${MAVEN_GPG_PASSPHRASE} -Psigning.gnupg.keyName="${MAVEN_GPG_KEY_ID}" clean publish
+        ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
+        ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      run: ./gradlew -Ptarget=snapshot clean publishToSonatype
