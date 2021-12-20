@@ -11,7 +11,7 @@ plugins {
 
 def profile = "snapshot"
 if (project.hasProperty('target')) {
-    profile = "$target"
+    profile = "${target}"
 }
 ext.isReleaseVersion = profile == "release"
 
@@ -78,23 +78,18 @@ dependencies {
     runtimeOnly 'org.apache.logging.log4j:log4j-slf4j-impl'
 }
 
-if (
-    (hasProperty('signing.gnupg.executable') && ${signing.gnupg.executable} == 'gpg2' && hasProperty('signing.gnupg.keyName') && hasProperty('signatory.password')) ||
-    (hasProperty('signing.keyId') && hasProperty('signing.password')) ||
-            (hasProperty('signingKey') && hasProperty('signingPassword'))
-) {
-    signing {
-        required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
-        
-        if (hasProperty('signing.gnupg.executable') && ${signing.gnupg.executable} == 'gpg2') {
-            useGpgCmd()
-        }
-        if (hasProperty('signingKey') && hasProperty('signingPassword')) {
-            useInMemoryPgpKeys(${signingKey}, $ {signingPassword})
-        }
-        sign publishing.publications
+signing {
+    required { isReleaseVersion }
+
+    if (hasProperty('signing.gnupg.executable') && "${signing.gnupg.executable}" == 'gpg2') {
+        useGpgCmd()
     }
+    if (hasProperty('signingKey') && hasProperty('signingPassword')) {
+        useInMemoryPgpKeys("${signingKey}", "${signingPassword}")
+    }
+    sign publishing.publications
 }
+
 
 nexusPublishing {
     repositories {
