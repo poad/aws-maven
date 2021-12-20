@@ -29,7 +29,7 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
       <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.4</version>
+        <version>6.0.6</version>
         <extensions>true</extensions>
       </plugin>
       ...
@@ -213,6 +213,10 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 
 ## Release Notes
 
+- `6.0.6`
+  - Bumps log4j2 to 2.17.0
+- `6.0.5`
+  - Bumps log4j2 to 2.15.0
 - `6.0.4`
   - Migrate Maven to Gradle
   - Migrate Logger to Log4j2
