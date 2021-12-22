@@ -79,14 +79,11 @@ dependencies {
 }
 
 signing {
+    println(isReleaseVersion)
+    
     required { isReleaseVersion }
 
-    if (hasProperty('signing.gnupg.executable') && "${signing.gnupg.executable}" == 'gpg2') {
-        useGpgCmd()
-    }
-    if (hasProperty('signingKey') && hasProperty('signingPassword')) {
-        useInMemoryPgpKeys("${signingKey}", "${signingPassword}")
-    }
+    useGpgCmd()
     sign publishing.publications
 }
 
