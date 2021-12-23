@@ -17,7 +17,7 @@ ext.isReleaseVersion = profile == "release"
 
 
 group = 'com.github.poad'
-version = '6.0.6' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
+version = '6.0.7' + (profile == "snapshot" ? "." + java.time.format.DateTimeFormatter
         .ofPattern("yyyyMMddHHmmss")
         .format(ZonedDateTime.now()) + '-SNAPSHOT' : '')
 description = 'Amazon Web Services S3 Maven Wagon Support'
