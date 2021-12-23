@@ -38,9 +38,8 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       run: |
           ./gradlew -Ptarget=snapshot \
-            -Psigning.gnupg.executable=gpg2 \
-            -Psigning.gnupg.keyName=${{secrets.OSSRH_GPG_SECRET_KEY_ID }} \
-            -Psigning.gnupg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
             clean publishToSonatype

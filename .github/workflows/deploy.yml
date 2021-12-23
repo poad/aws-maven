@@ -16,11 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - id: install-secret-key
-      name: Install gpg secret key
-      run: |
-        cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
-        gpg --list-secret-keys --keyid-format LONG
     - name: Set up JDK
       uses: actions/setup-java@v2
       with:
@@ -34,9 +29,8 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
         ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingKey: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+        ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       run: |
           ./gradlew -Ptarget=release \
-            -Psigning.gnupg.executable=gpg2 \
-            -Psigning.gnupg.keyName="${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}" \
-            -Psigning.gnupg.passphrase="${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}" \
             clean publishToSonatype closeAndReleaseSonatypeStagingRepository
