@@ -213,6 +213,8 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 
 ## Release Notes
 
+- `6.0.7`
+  - Bumps Maven Wagon Provider API to 3.5.0
 - `6.0.6`
   - Bumps log4j2 to 2.17.0
 - `6.0.5`
