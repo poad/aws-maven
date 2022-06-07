@@ -30,7 +30,7 @@ java {
 
 ext {
     slf4jVersion = '1.7.36'
-    xmlBindVersion = '3.0.2'
+    xmlBindVersion = '4.0.0'
 }
 
 repositories {
