@@ -59,7 +59,7 @@ dependencies {
     implementation 'org.apache.maven.wagon:wagon-provider-api:3.5.2'
 
     testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
-    testImplementation 'org.mockito:mockito-core:4.8.0'
+    testImplementation 'org.mockito:mockito-core:4.8.1'
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
     testImplementation("org.junit.jupiter:junit-jupiter") {
