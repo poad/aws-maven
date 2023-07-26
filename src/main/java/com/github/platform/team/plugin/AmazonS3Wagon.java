@@ -26,6 +26,7 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.Region;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.github.platform.team.plugin.aws.AWSMavenCredentialsProviderChain;
@@ -146,12 +147,19 @@ public final class AmazonS3Wagon extends AbstractWagon {
     }
 
     private static String getBucketRegion(AWSCredentialsProvider credentialsProvider, ClientConfiguration clientConfiguration, String bucketName) {
-        return AmazonS3Client.builder()
-                .withCredentials(credentialsProvider)
-                .withClientConfiguration(clientConfiguration)
-                .enableForceGlobalBucketAccess()
-                .build()
-                .getBucketLocation(bucketName);
+        String location = AmazonS3Client.builder()
+        .withCredentials(credentialsProvider)
+        .withClientConfiguration(clientConfiguration)
+        .enableForceGlobalBucketAccess()
+        .build()
+        .getBucketLocation(bucketName);
+
+        Region region = Region.fromValue(location);
+        if (region.equals(Region.US_Standard)) {
+            return ("us-east-1");
+        } else {
+            return (region.toString());
+        }
     }
 
     @Override
