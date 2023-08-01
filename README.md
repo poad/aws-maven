@@ -212,7 +212,9 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 ```
 
 ## Release Notes
-
+- `6.0.8`
+  - fix for bucket region selection failure by @stutily in #420
+  - Update the dependencies 
 - `6.0.7`
   - Bumps Maven Wagon Provider API to 3.5.0
 - `6.0.6`
