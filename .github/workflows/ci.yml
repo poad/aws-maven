@@ -57,7 +57,13 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: JUnit and JaCoCo
+        name: JaCoCo
+        path: |
+          ./build/reports/jacoco/test
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: JUnit
         path: |
           ./build/reports/jacoco/test
           ./build/reports/tests/test
