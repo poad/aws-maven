@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-bom
-    implementation(platform('com.amazonaws:aws-java-sdk-bom:1.12.622'))
+    implementation(platform('com.amazonaws:aws-java-sdk-bom:1.12.623'))
 
 
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
