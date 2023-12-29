@@ -29,7 +29,7 @@ java {
 }
 
 ext {
-    slf4jVersion = '2.0.9'
+    slf4jVersion = '2.0.10'
     xmlBindVersion = '4.0.4'
 }
 
