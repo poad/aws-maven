@@ -29,7 +29,7 @@ To publish Maven artifacts to S3 a build extension must be defined in a project'
       <plugin>
         <groupId>com.github.poad</groupId>
         <artifactId>aws-maven</artifactId>
-        <version>6.0.8</version>
+        <version>7.0.0</version>
         <extensions>true</extensions>
       </plugin>
       ...
@@ -212,6 +212,9 @@ aws s3api put-bucket-policy --bucket $BUCKET --policy "$POLICY"
 ```
 
 ## Release Notes
+- `7.0.0`
+  - Update the dependencies 
+  - Add support Java 21
 - `6.0.8`
   - fix for bucket region selection failure by @stutily in #420
   - Update the dependencies 
