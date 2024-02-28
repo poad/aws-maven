@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk-version: [11, 17]
+        jdk-version: [11, 17, 21]
 
     steps:
     - uses: actions/checkout@v4
@@ -57,13 +57,13 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: JaCoCo
+        name: JaCoCo (${{ matrix.jdk-version }})
         path: |
           ./build/reports/jacoco/test
     - uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: JUnit
+        name: JUnit (${{ matrix.jdk-version }})
         path: |
           ./build/reports/jacoco/test
           ./build/reports/tests/test
