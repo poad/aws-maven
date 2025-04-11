@@ -1,3 +1,5 @@
+## NOTE: THIS PROJECT IS NOT SUPPORTED ANYMORE!!!
+
 # AWS Maven Wagon
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.poad/aws-maven)](https://search.maven.org/artifact/com.github.poad/aws-maven)
